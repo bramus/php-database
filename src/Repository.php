@@ -436,7 +436,8 @@ abstract class Repository
 							}
 
 							// Don't escape fieldname if it contains "(" which indicates that a function is being called on a field.
-							if (strpos($prefixedFieldName, '(')) {
+							// Also don't escape ->" which indicates that some JSON magic is being called …
+							if (strpos($prefixedFieldName, '(') || strpos($prefixedFieldName, '->')) {
 								$prefixedFieldName = mb_substr($prefixedFieldName, 0, -1);
 							} else {
 								$prefixedFieldName = '`' . $tablePrefix . '`.`' . mb_substr($prefixedFieldName, 0, -1) . '`';
@@ -451,7 +452,8 @@ abstract class Repository
 									case is_subclass_of($prefixedValue, 'Bramus\Database\Expressions\Base'):
 
 										// Don't escape fieldname if it contains "(" which indicates that a function is being called on a field.
-										if (strpos($prefixedFieldName, '(')) {
+										// Also don't escape ->" which indicates that some JSON magic is being called …
+										if (strpos($prefixedFieldName, '(') || strpos($prefixedFieldName, '->')) {
 											$prefixedValue->fieldName = $prefixedFieldName;
 										} else {
 											$prefixedValue->fieldName = '`' . $tablePrefix . '`.`' . $prefixedFieldName . '`';
@@ -469,7 +471,8 @@ abstract class Repository
 							} else {
 
 								// Don't escape fieldname if it contains "(" which indicates that a function is being called on a field.
-								if (strpos($prefixedFieldName, '(')) {
+								// Also don't escape ->" which indicates that some JSON magic is being called …
+								if (strpos($prefixedFieldName, '(') || strpos($prefixedFieldName, '->')) {
 									$prefixedFieldName = $prefixedFieldName;
 								} else {
 									$prefixedFieldName = '`' . $tablePrefix . '`.`' . $prefixedFieldName . '`';
@@ -494,7 +497,8 @@ abstract class Repository
 						}
 
 						// Don't escape fieldname if it contains "(" which indicates that a function is being called on a field.
-						if (strpos($fieldName, '(')) {
+						// Also don't escape ->" which indicates that some JSON magic is being called …
+						if (strpos($fieldName, '(') || strpos($fieldName, '->')) {
 							$fieldName = mb_substr($fieldName, 0, -1);
 						} else {
 							$fieldName = '`' . mb_substr($fieldName, 0, -1) . '`';
@@ -509,7 +513,8 @@ abstract class Repository
 								case is_subclass_of($value, 'Bramus\Database\Expressions\Base'):
 
 									// Don't escape fieldname if it contains "(" which indicates that a function is being called on a field.
-									if (strpos($fieldName, '(')) {
+									// Also don't escape ->" which indicates that some JSON magic is being called …
+									if (strpos($fieldName, '(') || strpos($fieldName, '->')) {
 										$value->fieldName = $fieldName;
 									} else {
 										$value->fieldName = '`' . $fieldName . '`';
@@ -527,7 +532,8 @@ abstract class Repository
 						} else {
 
 							// Don't escape fieldname if it contains "(" which indicates that a function is being called on a field.
-							if (strpos($fieldName, '(')) {
+							// Also don't escape ->" which indicates that some JSON magic is being called …
+							if (strpos($fieldName, '(') || strpos($fieldName, '->')) {
 								$fieldName = $fieldName;
 							} else {
 								$fieldName = '`' . $fieldName . '`';
